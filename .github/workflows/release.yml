@@ -81,7 +81,7 @@ jobs:
         run: find release-artifacts -type f -maxdepth 3 -print
 
       - name: Publish release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           draft: false
           prerelease: false
