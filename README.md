@@ -16,8 +16,6 @@ Use this to save time, start closer to your real idea, and focus on the specific
 
 ![Geistr Core chat demo](docs/assets/chat-with-agent.gif)
 
-[Watch/download the MP4](docs/assets/chat-with-agent.mp4)
-
 ## What you get out of the box
 
 - **Desktop app shell** — Electron + React app with chat, sidebar navigation, settings, themes, attachments, and packaged builds.
@@ -91,8 +89,6 @@ Geistr includes a local memory system for indexing useful session content, retri
 It also includes a read-only **Memory Galaxy** UI for exploring memories as a graph.
 
 ![Memory Galaxy demo](docs/assets/memory-galaxy.gif)
-
-[Watch/download the MP4](docs/assets/memory-galaxy.mp4)
 
 Docs:
 
