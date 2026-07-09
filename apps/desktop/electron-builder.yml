@@ -1,5 +1,6 @@
 appId: app.geistr.core.desktop
 productName: Geistr Core
+executableName: Geistr Core
 copyright: Copyright © 2026 Mohammed
 
 directories:
@@ -35,5 +36,6 @@ linux:
   target:
     - AppImage
   category: Utility
+  desktopName: geistr-core
 
 publish: null
