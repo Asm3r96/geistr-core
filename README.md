@@ -168,11 +168,11 @@ Docs:
 
 ## Download and install
 
-For normal use, download the latest installer from GitHub Releases once releases are published:
+For normal use, download the latest installer from [GitHub Releases](https://github.com/Asm3r96/geistr-core/releases/latest):
 
-- Windows: download the `.exe` installer.
-- macOS: download the `.dmg` build.
-- Linux: first release support is experimental.
+- **Windows:** download `Geistr Core Setup 1.0.0.exe`
+- **macOS Apple Silicon:** download `Geistr Core-1.0.0-arm64.dmg`
+- **Linux:** download the `.AppImage` file
 
 > First public builds are unsigned. Windows SmartScreen or macOS Gatekeeper may show warnings until signing and notarization are added.
 

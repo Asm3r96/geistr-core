@@ -15,8 +15,12 @@ Initial public release of Geistr Core: a reusable desktop-first AI app foundatio
 - Four permission modes: Read only, Request approval, Default, and Full access.
 - Generic background loop runtime and session compaction loop.
 
-## Installers
+## Downloads
 
-Download the artifact for your platform from this GitHub Release.
+Choose the file for your platform:
+
+- **Windows:** `Geistr Core Setup 1.0.0.exe`
+- **macOS Apple Silicon:** `Geistr Core-1.0.0-arm64.dmg`
+- **Linux:** `.AppImage`
 
 > Note: first public builds are unsigned. Windows SmartScreen and macOS Gatekeeper may warn until code signing/notarization is added.

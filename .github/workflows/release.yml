@@ -10,12 +10,18 @@ permissions:
 
 jobs:
   build:
-    name: Build ${{ matrix.os }}
+    name: Build ${{ matrix.label }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        include:
+          - os: windows-latest
+            label: windows
+          - os: macos-latest
+            label: macos
+          - os: ubuntu-latest
+            label: linux
 
     steps:
       - name: Checkout
@@ -32,13 +38,30 @@ jobs:
       - name: Build desktop package
         run: bun run package:desktop
 
+      - name: Prepare release files on Windows
+        if: matrix.label == 'windows'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force release-upload | Out-Null
+          Get-ChildItem apps/desktop/release -File -Include '*.exe' -Recurse | Copy-Item -Destination release-upload
+
+      - name: Prepare release files on macOS/Linux
+        if: matrix.label != 'windows'
+        shell: bash
+        run: |
+          mkdir -p release-upload
+          find apps/desktop/release -maxdepth 2 -type f \( -name '*.dmg' -o -name '*.AppImage' \) -exec cp '{}' release-upload/ \;
+
+      - name: List release files
+        shell: bash
+        run: ls -la release-upload
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: geistr-core-${{ matrix.os }}
-          path: |
-            apps/desktop/release/**
-            !apps/desktop/release/**/*.blockmap
+          name: geistr-core-${{ matrix.label }}
+          path: release-upload/*
+          if-no-files-found: error
 
   publish:
     name: Publish GitHub Release
@@ -54,8 +77,13 @@ jobs:
         with:
           path: release-artifacts
 
+      - name: Show release files
+        run: find release-artifacts -type f -maxdepth 3 -print
+
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
+          draft: false
+          prerelease: false
           body_path: RELEASE_NOTES.md
-          files: release-artifacts/**
+          files: release-artifacts/**/*

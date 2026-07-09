@@ -33,7 +33,7 @@ nsis:
 
 linux:
   target:
-    - dir
+    - AppImage
   category: Utility
 
 publish: null
