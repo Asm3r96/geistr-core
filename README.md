@@ -14,7 +14,7 @@ That is why I created Geistr Core for my own use: a base app I can reuse wheneve
 
 Use this to save time, start closer to your real idea, and focus on the specific experience you want to create.
 
-<video src="docs/assets/chat-with-agent.mp4" controls muted playsinline width="100%"></video>
+<video src="https://raw.githubusercontent.com/Asm3r96/geistr-core/main/docs/assets/chat-with-agent.mp4" controls muted playsinline width="100%"></video>
 
 ## What you get out of the box
 
@@ -88,7 +88,7 @@ Geistr includes a local memory system for indexing useful session content, retri
 
 It also includes a read-only **Memory Galaxy** UI for exploring memories as a graph.
 
-<video src="docs/assets/memory-galaxy.mp4" controls muted playsinline width="100%"></video>
+<video src="https://raw.githubusercontent.com/Asm3r96/geistr-core/main/docs/assets/memory-galaxy.mp4" controls muted playsinline width="100%"></video>
 
 Docs:
 
