@@ -1,0 +1,43 @@
+{
+  "name": "@geistr/desktop",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/main/main.js",
+  "scripts": {
+    "dev": "bun scripts/dev.ts",
+    "dev:renderer": "vite --host 127.0.0.1",
+    "dev:electron": "bun run build:main && electron .",
+    "build": "bun run build:main && vite build",
+    "build:main": "vite build -c vite.main.config.ts",
+    "package:dir": "bun run build && electron-builder --dir",
+    "package": "bun run build && electron-builder",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.main.json && tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@geistr/core": "workspace:*",
+    "lucide-react": "^0.468.0",
+    "marked": "^18.0.5",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-force-graph-3d": "^1.29.1",
+    "three": "^0.185.1"
+  },
+  "description": "Geistr Core desktop AI app foundation",
+  "author": "Geistr",
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.185.1",
+    "@vitejs/plugin-react": "^6.0.3",
+    "electron": "^43.0.0",
+    "electron-builder": "^26.0.12",
+    "jsdom": "^29.1.1",
+    "vite": "^8.1.3"
+  }
+}

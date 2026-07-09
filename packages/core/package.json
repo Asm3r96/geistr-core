@@ -1,0 +1,19 @@
+{
+  "name": "@geistr/core",
+  "version": "1.0.0",
+  "dependencies": {
+    "@earendil-works/pi-ai": "^0.80.3",
+    "@earendil-works/pi-coding-agent": "^0.80.3",
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "type": "module"
+}

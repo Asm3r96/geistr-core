@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "label": "Geistr Agent Documentation",
+  "navigation": [
+    {
+      "title": "Core Concepts",
+      "items": [
+        { "title": "Profile, Soul, and Identity", "path": "profile-and-soul.md" },
+        { "title": "Memory System", "path": "memory.md" },
+        { "title": "Session and Compaction", "path": "session-and-compaction.md" }
+      ]
+    },
+    {
+      "title": "Tools and Skills",
+      "items": [
+        { "title": "Tool Reference", "path": "tools-reference.md" },
+        { "title": "Skills Guide", "path": "skills-guide.md" }
+      ]
+    },
+    {
+      "title": "Runtime and Safety",
+      "items": [
+        { "title": "Permissions and Access Modes", "path": "permissions.md" }
+      ]
+    },
+    {
+      "title": "External Integration",
+      "items": [
+        { "title": "MCP Server Integration", "path": "mcp.md" }
+      ]
+    },
+    {
+      "title": "Background Work",
+      "items": [
+        { "title": "Background Loops", "path": "loops.md" }
+      ]
+    }
+  ]
+}

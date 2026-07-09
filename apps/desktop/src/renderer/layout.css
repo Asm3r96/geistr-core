@@ -1,0 +1,99 @@
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 0; min-height: 640px; overflow-x: hidden; background: var(--app-bg); color: var(--text-primary); }
+button, textarea, input, select { font: inherit; }
+.appFrame { display: grid; grid-template-rows: 38px 1fr; height: 100vh; overflow: hidden; background: radial-gradient(circle at top left, var(--app-bg-radial), var(--app-bg) 36%); }
+.appTopBar { display: flex; align-items: center; gap: 10px; padding: 6px 140px 6px 10px; border-bottom: 1px solid var(--border-subtle); background: var(--app-bg); -webkit-app-region: drag; }
+.platformMac .appTopBar { padding: 6px 10px 6px 78px; }
+.platformWindows .appTopBar { padding: 6px 140px 6px 10px; }
+.topBarButton { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border: 0; border-radius: 7px; color: var(--icon-default); background: transparent; cursor: pointer; -webkit-app-region: no-drag; }
+.topBarButton:hover { background: var(--surface-hover); }
+.topBarButton.muted { color: var(--text-faint); }
+.shell { display: grid; grid-template-columns: var(--sidebar-width, minmax(220px, 292px)) minmax(0, 1fr); min-height: 0; overflow: hidden; transition: grid-template-columns .22s ease; }
+.sidebarCollapsed .shell { grid-template-columns: 56px minmax(0, 1fr); }
+
+/* Sidebar resize handle */
+.sidebarResizeHandle {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  bottom: 0;
+  width: 6px;
+  cursor: ew-resize;
+  z-index: 10;
+  background: transparent;
+  transition: background .12s ease;
+}
+.sidebarResizeHandle:hover,
+.sidebarResizeHandle:active {
+  background: var(--focus-border);
+}
+.sidebarCollapsed .sidebarResizeHandle {
+  display: none;
+}
+.shell.settingsShell, .sidebarCollapsed .shell.settingsShell { grid-template-columns: minmax(0, 1fr); }
+.sidebar { display: flex; flex-direction: column; gap: 4px; min-width: 0; min-height: 0; overflow: hidden; padding: 14px 10px 0; border-right: 1px solid var(--border-subtle); background: linear-gradient(180deg, color-mix(in srgb, var(--surface-sidebar) 94%, var(--surface-hover)), var(--surface-sidebar)); transition: padding .22s ease; position: relative; }
+.sidebarCollapsed .sidebar { padding-inline: 10px; }
+.navButton, .sectionButton, .chatHistoryOpen, .chatMenuButton, .profile { border: 0; color: var(--text-secondary); background: transparent; cursor: pointer; }
+.navButton:hover, .navButton.selected, .sectionButton:hover, .chatHistoryItem:hover, .profile:hover { background: var(--surface-hover-subtle); color: var(--text-primary); }
+.navButton.selected, .chatHistoryItem.selected { box-shadow: inset 0 0 0 1px var(--border-subtle); }
+.navButton, .sectionButton, .chatHistoryItem { display: flex; align-items: center; gap: 10px; min-height: 34px; width: 100%; min-width: 0; border-radius: var(--radius-md); padding: 0 9px; text-align: left; white-space: nowrap; font-size: var(--font-md); transition: background var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard); }
+.navButton svg { flex: 0 0 17px; color: var(--icon-default); opacity: .9; }
+.navButton span, .sectionButton span, .chatHistoryItem span, .chatHistoryItem small, .profileText { overflow: hidden; text-overflow: ellipsis; transition: opacity .16s ease; }
+.sectionButton { justify-content: space-between; margin-top: 12px; color: var(--text-faint); }
+.sectionButton.muted, .navButton.muted { color: var(--text-muted); }
+.sectionLabel { margin: 18px 10px 6px; color: var(--text-faint); font-size: var(--font-xs); font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; }
+.chatHistoryList { display: flex; flex: 1; flex-direction: column; gap: 4px; min-height: 0; overflow-y: auto; overflow-x: visible; padding-bottom: var(--space-4); }
+.chatHistoryItem { position: relative; justify-content: space-between; color: var(--text-secondary); }
+.chatHistoryItem.selected { background: var(--surface-hover); color: var(--text-primary); }
+.chatHistoryOpen { display: flex; align-items: center; min-width: 0; flex: 1; align-self: stretch; padding: 0; text-align: left; }
+.chatHistoryOpen span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chatMenuWrap { position: relative; display: flex; align-items: center; flex: 0 0 auto; }
+.chatMenuButton { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; padding: 0; color: var(--text-faint); border-radius: var(--radius-sm); opacity: .75; }
+.chatHistoryItem:hover .chatMenuButton, .chatMenuButton:hover { color: var(--text-primary); background: transparent; opacity: 1; }
+.chatMenu { position: absolute; z-index: 8; top: 24px; right: 0; width: max-content; min-width: 136px; padding: 4px; border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface-composer); box-shadow: var(--shadow-popover); }
+.chatMenu button { display: flex; width: 100%; justify-content: flex-start; padding: 7px 8px; border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--text-primary); font: inherit; font-size: var(--font-sm); line-height: 1.35; text-align: left; cursor: pointer; }
+.chatMenu button:hover { background: var(--surface-hover); }
+.chatMenu .dangerMenuItem { color: var(--state-danger); }
+.chatHistoryEmpty { padding: 8px; color: var(--text-faint); font-size: var(--font-sm); }
+.spacer { flex: 0; }
+.profile { display: flex; gap: 9px; align-items: center; width: calc(100% + 20px); margin-inline: -10px; padding: 11px 16px 13px; border-top: 1px solid var(--border-subtle); text-align: left; background: color-mix(in srgb, var(--surface-sidebar) 88%, transparent); }
+.avatar { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 34px; width: 34px; height: 34px; border-radius: 999px; color: var(--avatar-fg); background: var(--avatar-bg); font-size: 12px; }
+.profileText { color: var(--text-secondary); line-height: 1.35; }
+.profileText small { color: var(--text-muted); }
+.sidebarCollapsed .navButton span, .sidebarCollapsed .sectionButton span, .sidebarCollapsed .sectionButton svg, .sidebarCollapsed .sectionLabel, .sidebarCollapsed .chatHistoryItem span, .sidebarCollapsed .chatHistoryItem small, .sidebarCollapsed .profileText { display: none; opacity: 0; pointer-events: none; }
+.sidebarCollapsed .chatHistoryList, .sidebarCollapsed .chatHistoryEmpty, .sidebarCollapsed .chatMenuWrap { display: none; }
+.sidebarCollapsed .spacer { display: block; flex: 1; }
+.sidebarCollapsed .navButton, .sidebarCollapsed .sectionButton, .sidebarCollapsed .chatHistoryItem { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; min-height: 36px; padding: 0; gap: 0; margin-inline: auto; line-height: 0; text-align: center; }
+.sidebarCollapsed .navButton svg { display: block; width: 19px; height: 19px; flex: 0 0 19px; margin: 0; }
+.sidebarCollapsed .profile { justify-content: center; width: 100%; margin-inline: 0; padding: 12px 0; }
+.sidebarCollapsed .avatar { flex: 0 0 34px; width: 34px; height: 34px; font-size: 12px; }
+.dialogOverlay { position: fixed; inset: 0; z-index: 40; display: grid; place-items: start center; padding-top: 92px; background: rgba(0, 0, 0, .28); backdrop-filter: blur(2px); }
+.confirmDialog { position: relative; width: min(476px, calc(100vw - 32px)); padding: 32px 30px 30px; border: 1px solid var(--border-subtle); border-radius: 22px; background: color-mix(in srgb, var(--surface-composer) 92%, var(--app-bg)); box-shadow: var(--shadow-popover); }
+.confirmDialog h2 { margin: 0 0 8px; color: var(--text-primary); font-size: var(--font-xl); line-height: 1.15; font-weight: 680; }
+.confirmDialog p { margin: 0; max-width: 390px; color: var(--text-muted); font-size: var(--font-md); line-height: 1.45; }
+.dialogClose { position: absolute; top: 18px; right: 20px; display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: 0; color: var(--text-muted); background: transparent; font: inherit; font-size: 24px; line-height: 1; cursor: pointer; }
+.dialogClose:hover { color: var(--text-primary); }
+.dialogInput { width: 100%; height: 40px; margin-top: 18px; padding: 0 12px; border: 1px solid var(--border-default); border-radius: var(--radius-md); outline: none; color: var(--text-primary); background: var(--field-bg); font-size: var(--font-md); }
+.dialogInput:focus { border-color: var(--focus-border); background: var(--field-bg-focus); }
+.dialogActions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 30px; }
+.dialogSecondary, .dialogPrimary, .dialogDanger { min-width: 88px; min-height: 40px; padding: 0 18px; border: 0; border-radius: var(--radius-lg); font: inherit; font-size: var(--font-md); font-weight: 600; cursor: pointer; }
+.dialogSecondary { color: var(--text-muted); background: transparent; }
+.dialogSecondary:hover { color: var(--text-primary); background: var(--surface-hover-subtle); }
+.dialogPrimary { color: var(--action-primary-fg); background: var(--action-primary-bg); }
+.dialogDanger { color: var(--state-danger); background: color-mix(in srgb, var(--state-danger) 15%, transparent); }
+.dialogDanger:hover { background: color-mix(in srgb, var(--state-danger) 22%, transparent); }
+.chatPanel { display: grid; grid-template-rows: auto 1fr auto; min-width: 0; min-height: 0; }
+.loopProgressWrap { display: flex; justify-content: center; padding: 14px 12px 0; pointer-events: none; }
+.loopProgressCard { display: inline-flex; align-items: center; gap: 10px; width: min(700px, 100%); padding: 10px 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); background: color-mix(in srgb, var(--surface-popover) 82%, transparent); box-shadow: var(--shadow-lg); color: var(--text-muted); }
+.loopProgressPulse { width: 9px; height: 9px; border-radius: var(--radius-pill); background: var(--state-success); box-shadow: 0 0 18px var(--state-success); animation: loopPulse 1.4s ease-in-out infinite; }
+.loopProgressText { display: flex; flex-direction: column; gap: 2px; min-width: 0; font-size: var(--font-xs); }
+.loopProgressText strong { color: var(--text-secondary); font-size: var(--font-sm); font-weight: 650; }
+.loopProgressText span { overflow: hidden; color: var(--text-muted); text-overflow: ellipsis; white-space: nowrap; }
+@keyframes loopPulse { 0%, 100% { transform: scale(.9); opacity: .65; } 50% { transform: scale(1.1); opacity: 1; } }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.status { display: inline-flex; gap: 9px; align-items: center; color: var(--text-muted); font-size: 14px; }
+.dot { width: 8px; height: 8px; border-radius: 999px; background: var(--status-idle); }
+.dot.active { background: var(--state-success); box-shadow: 0 0 18px var(--state-success); }
+.messageList { overflow-y: auto; overflow-x: hidden; padding: 24px 0; min-width: 0; min-height: 0; scrollbar-width: none; -ms-overflow-style: none; }
+.messageList::-webkit-scrollbar { display: none; }
+.messageListInner { max-width: 700px; margin: 0 auto; padding: 0 12px; }

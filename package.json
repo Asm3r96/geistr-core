@@ -1,0 +1,25 @@
+{
+  "name": "geistr-core",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "check:file-size": "bun scripts/check-file-size.ts",
+    "generate:agent-docs": "bun scripts/generate-agent-docs-content.ts",
+    "test": "bun run check:file-size && bun run --filter '*' test",
+    "typecheck": "bun run --filter '*' typecheck",
+    "validate": "bun run check:file-size && bun run --filter '*' test && bun run --filter '*' typecheck",
+    "package:desktop:dir": "bun run --filter @geistr/desktop package:dir",
+    "package:desktop": "bun run --filter @geistr/desktop package"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "7.0.2",
+    "vitest": "^2.1.0"
+  }
+}

@@ -1,0 +1,336 @@
+.settingsScreen { display: grid; grid-template-columns: 240px minmax(0, 1fr); width: 100%; min-width: 0; min-height: 0; overflow: hidden; }
+.settingsNav { min-width: 0; padding: 18px 12px; border-right: 1px solid var(--border-subtle); background: var(--surface-sidebar); }
+.settingsNavGroup { display: grid; gap: 4px; margin-top: 20px; }
+.settingsNavLabel { margin: 0 10px 5px; color: var(--text-muted); font-size: var(--font-xs); font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; }
+.backToApp, .settingsNavItem { display: flex; align-items: center; gap: 9px; width: 100%; min-height: 36px; padding: 0 10px; border: 0; border-radius: 9px; color: var(--text-secondary); background: transparent; text-align: left; font: inherit; font-size: var(--font-md); cursor: pointer; }
+.backToApp:hover, .settingsNavItem:hover, .settingsNavItem.selected { background: var(--surface-hover); }
+.backToApp { color: var(--text-muted); }
+.settingsPage { min-width: 0; overflow-y: auto; overflow-x: hidden; padding: 38px clamp(16px, 5vw, 72px); }
+.appPage { background: var(--app-bg); }
+.settingsStack { display: grid; gap: 16px; width: min(100%, 860px); min-width: 0; }
+.settingsStack header h2, .settingsCard h2 { margin: 0 0 6px; font-size: 28px; }
+.settingsStack header p, .settingsCard p { margin: 0; color: var(--text-muted); }
+.providerSearchInput { width: 100%; max-width: 420px; min-height: 38px; border: 1px solid var(--border-default); border-radius: 12px; padding: 0 12px; color: var(--text-secondary); background: var(--field-bg); outline: 0; }
+.providerSearchInput:focus { border-color: var(--focus-border); background: var(--field-bg-focus); }
+.settingsCard { display: grid; gap: 12px; width: 100%; min-width: 0; padding: 18px; border: 1px solid var(--border-default); border-radius: 18px; background: var(--field-bg); }
+.settingsCard h3 { margin: 0; font-size: 16px; }
+.settingsEmpty { padding: 8px 0; color: var(--text-muted); font-size: 13px; }
+.skillSection { display: grid; gap: 12px; }
+.settingsStack > header + .skillSection { margin-top: 10px; }
+.skillSection + .skillSection { margin-top: 10px; }
+.skillSection h3 { margin: 0; font-size: 12px; font-weight: 650; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.skillList { display: grid; gap: 8px; }
+.skillCard { padding: 10px 0; border-bottom: 1px solid var(--border-subtle); }
+.skillCardHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+.skillCard h4 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; font-weight: 650; color: var(--text-primary); }
+.skillCard p { margin: 0; color: var(--text-muted); font-size: 13px; line-height: 1.45; }
+.skillStatusBadge { color: var(--text-muted); border: 1px solid var(--border-subtle); border-radius: 999px; padding: 1px 7px; font-size: 11px; font-weight: 500; }
+.skillMenuWrap { position: relative; }
+.skillMenuWrap .iconButton { border: 0; border-radius: 0; background: transparent; cursor: pointer; }
+.skillMenuWrap .iconButton:hover { background: transparent; color: var(--text-primary); }
+.skillMenu { position: absolute; z-index: 5; top: 26px; right: 0; width: max-content; min-width: 112px; padding: 4px; border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface-composer); box-shadow: var(--shadow-popover); }
+.skillMenu button { display: flex; width: 100%; justify-content: flex-start; padding: 6px 8px; background: transparent; border: 0; color: var(--text-primary); font: inherit; font-size: var(--font-sm); line-height: 1.35; text-align: left; cursor: pointer; }
+.skillMenu button:hover { background: var(--surface-hover); }
+.skillMenu .dangerMenuItem { color: var(--state-danger); }
+.providerRow { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: center; min-width: 0; padding: 12px 0; border-top: 1px solid var(--border-subtle); }
+.providerRow.connected { margin-inline: -8px; padding-inline: 8px; border-radius: 12px; background: color-mix(in srgb, var(--state-success) 10%, transparent); }
+.providerRow:first-of-type { border-top: 0; }
+.providerRow > div { min-width: 0; }
+.providerRow strong, .providerRow small { display: block; overflow-wrap: anywhere; }
+.providerRow small { margin-top: 3px; color: var(--text-muted); font-size: 12px; }
+.connectedBadge { justify-self: start; border: 1px solid color-mix(in srgb, var(--state-success) 36%, transparent); border-radius: 999px; padding: 3px 8px; color: var(--state-success); background: color-mix(in srgb, var(--state-success) 12%, transparent); font-size: 12px; }
+.providerActions { display: inline-flex; gap: 8px; align-items: center; }
+.providerRow button { justify-self: start; width: max-content; border: 1px solid var(--border-default); border-radius: 999px; padding: 7px 12px; color: var(--text-secondary); background: var(--surface-hover-subtle); cursor: pointer; }
+.providerRow button.secondaryButton { color: var(--text-muted); background: transparent; }
+.providerRow button:hover { background: var(--surface-hover); }
+.providerRow button:disabled { opacity: .55; cursor: default; }
+.apiKeyRow { grid-template-columns: minmax(180px, 1fr) minmax(0, 300px) auto; }
+.apiKeyRow.connected { grid-template-columns: minmax(0, 1fr) auto; }
+.apiKeyRow.connected input { grid-column: 1 / -1; }
+.apiKeyRow.connected .providerActions { grid-column: 1 / -1; }
+.apiKeyRow input { justify-self: stretch; width: 100%; min-width: 0; min-height: 34px; border: 1px solid var(--border-default); border-radius: 10px; padding: 0 10px; color: var(--text-secondary); background: var(--field-bg); outline: 0; }
+.apiKeyRow input:focus { border-color: var(--focus-border); }
+.authNotice { max-width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--border-default); border-radius: 12px; color: var(--text-secondary); background: var(--surface-hover-subtle); overflow-wrap: anywhere; }
+
+/* ── Theme settings ──────────────────────────────────── */
+.themeSettings p { margin: 0; }
+.themeSettings p:first-of-type { margin-bottom: 8px; }
+.themeModeGroup { display: flex; gap: 10px; margin: 0; padding: 0; border: 0; }
+.themeModeOption { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; padding: 16px 12px; border: 1px solid var(--border-default); border-radius: 14px; color: var(--text-secondary); background: var(--field-bg); cursor: pointer; transition: border-color var(--duration-fast) var(--ease-standard), background var(--duration-fast) var(--ease-standard); }
+.themeModeOption:hover { background: var(--surface-hover-subtle); }
+.themeModeOption.selected { border-color: var(--focus-border); background: var(--field-bg-focus); }
+.themeModeOption input { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.themeModeOption svg { display: block; }
+.themeModeOption span { font-size: 13px; font-weight: 550; }
+.themeNote { margin-top: 8px; color: var(--text-muted); font-size: 13px; }
+
+/* ── Custom select dropdown (replaces native <select>) ── */
+.selectDropdownAnchor { position: relative; }
+.selectDropdownTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  min-height: 32px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--icon-default);
+  background: var(--surface-hover-subtle);
+  cursor: pointer;
+  font-size: var(--font-sm);
+  text-align: left;
+  transition: background var(--duration-fast) var(--ease-standard);
+}
+.selectDropdownTrigger:hover { background: var(--surface-hover); }
+.selectDropdownTrigger:focus-visible { outline: 2px solid var(--focus-border); outline-offset: 1px; }
+.selectDropdownTrigger span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.selectDropdownTrigger svg { flex: 0 0 14px; color: var(--text-muted); }
+.selectDropdownMenu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  z-index: 10;
+  width: 100%;
+  min-width: 200px;
+  max-height: 260px;
+  overflow: auto;
+  padding: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface-popover);
+  box-shadow: var(--shadow-popover);
+}
+.selectDropdownItem {
+  display: flex;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--font-sm);
+}
+.selectDropdownItem { margin: 2px 0; }
+.selectDropdownItem:first-child { margin-top: 0; }
+.selectDropdownItem:last-child { margin-bottom: 0; }
+.selectDropdownItem:hover,
+.selectDropdownItem.selected { background: var(--surface-hover); }
+
+/* ── Default model settings ──────────────────────────── */
+.defaultModelControls { display: grid; gap: 14px; max-width: 380px; margin-top: 4px; }
+.defaultModelField { display: grid; gap: 5px; }
+.defaultModelField > span { color: var(--text-secondary); font-size: 13px; font-weight: 550; }
+
+/* ── Toggle switches (General settings) ──────────────── */
+.toggleRow { display: flex; align-items: center; gap: 10px; padding: 8px 0; cursor: pointer; }
+.toggleRow input[type="checkbox"] { width: 40px; height: 22px; border-radius: 11px; border: 1px solid var(--border-default); background: var(--field-bg); appearance: none; -webkit-appearance: none; cursor: pointer; position: relative; transition: background var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard); }
+.toggleRow input[type="checkbox"]::before { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--icon-default); transition: transform var(--duration-fast) var(--ease-standard), background var(--duration-fast) var(--ease-standard); }
+.toggleRow input[type="checkbox"]:checked { background: var(--state-success); border-color: var(--state-success); }
+.toggleRow input[type="checkbox"]:checked::before { transform: translateX(18px); background: var(--action-primary-fg); }
+.toggleRow span { color: var(--text-secondary); font-size: 14px; font-weight: 500; }
+.toggleNote { color: var(--text-muted); font-size: 12px; margin: 0; }
+
+/* ── Agent settings ────────────────────────────────── */
+.settingsTextarea {
+  width: 100%;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  background: var(--field-bg);
+  outline: 0;
+  resize: vertical;
+  font-size: 13px;
+  line-height: 1.5;
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+.settingsTextarea:focus {
+  border-color: var(--focus-border);
+  background: var(--field-bg-focus);
+}
+.settingsInput {
+  width: 100%;
+  max-width: 360px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  background: var(--field-bg);
+  outline: 0;
+  font-size: 14px;
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+.settingsInput:focus {
+  border-color: var(--focus-border);
+  background: var(--field-bg-focus);
+}
+.settingsAdvancedToggle {
+  width: 100%;
+  min-width: 0;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.settingsAdvancedToggle summary {
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-subtle);
+}
+.settingsAdvancedToggle[open] summary {
+  margin-bottom: 12px;
+}
+.settingsActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 4px;
+}
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  color: var(--action-primary-fg);
+  background: var(--action-primary-bg);
+  font-size: 14px;
+  font-weight: 550;
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+.primaryButton:hover { opacity: .88; }
+.primaryButton:disabled { opacity: .4; cursor: default; }
+.settingsNavIcon { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; font-size: 14px; }
+@media (max-width: 760px) {
+  .settingsScreen { grid-template-columns: 180px minmax(0, 1fr); }
+  .settingsPage { padding-inline: 14px; }
+  .providerRow, .apiKeyRow { grid-template-columns: minmax(0, 1fr); }
+  .providerRow button, .providerActions { justify-self: start; }
+}
+
+.approvalWrap {
+  width: min(700px, calc(100% - 24px));
+  margin: 0 auto 10px;
+}
+.approvalCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--surface-popover);
+  box-shadow: var(--shadow-popover);
+}
+.approvalText {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.approvalText span,
+.approvalText small {
+  overflow: hidden;
+  color: var(--text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.approvalActions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.approvalActions button {
+  min-height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  background: var(--field-bg);
+  cursor: pointer;
+}
+.approvalActions .approvalPrimary {
+  border-color: transparent;
+  color: var(--action-primary-fg);
+  background: var(--action-primary-bg);
+}
+.permissionMenuAnchor {
+  position: relative;
+}
+.permissionAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 32px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+}
+.permission-full-access { color: var(--action-primary-bg); }
+.permissionMenu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  z-index: 20;
+  min-width: 168px;
+  padding: 6px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--surface-popover);
+  box-shadow: var(--shadow-popover);
+}
+.permissionMenuItem {
+  display: grid;
+  grid-template-columns: 18px 1fr 16px;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 34px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.permissionMenuItem:hover,
+.permissionMenuItem.selected {
+  background: var(--field-bg-focus);
+}
+
+.navIconImage { width: 19px; height: 19px; flex: 0 0 auto; color: currentColor; }
+.settingsNavIconImage { width: 15px; height: 15px; flex: 0 0 auto; color: currentColor; }
+.settingsHeaderRow { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.settingsPrimaryButton, .settingsRowActions button, .dangerInlineButton { min-height: 34px; padding: 0 12px; border: 1px solid var(--border-default); border-radius: var(--radius-pill); color: var(--text-secondary); background: var(--surface-hover-subtle); cursor: pointer; }
+.settingsPrimaryButton, .dialogPrimary { border-color: transparent; color: var(--action-primary-fg); background: var(--action-primary-bg); }
+.settingsList { display: grid; gap: 10px; }
+.settingsListItem { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+.settingsListItem small { color: var(--text-muted); }
+.settingsRowActions { display: flex; gap: 8px; }
+.dangerInlineButton { color: var(--state-danger); }
+.mcpDialog { width: min(680px, calc(100vw - 32px)); max-height: min(760px, calc(100vh - 48px)); overflow: auto; gap: 14px; }
+.mcpDialog h2 { margin-bottom: 2px; }
+.settingsField { display: grid; gap: 6px; color: var(--text-secondary); font-size: var(--font-sm); }
+.settingsField input, .settingsField textarea, .settingsField select { width: 100%; min-height: 38px; padding: 8px 10px; border: 1px solid var(--border-default); border-radius: var(--radius-md); color: var(--text-primary); background: var(--field-bg); outline: 0; }
+.settingsField textarea { min-height: 76px; resize: vertical; }
+.settingsField input:focus, .settingsField textarea:focus, .settingsField select:focus { border-color: var(--focus-border); background: var(--field-bg-focus); }
+.settingsSegmented { display: inline-flex; width: max-content; gap: 3px; margin: 2px 0; padding: 3px; border: 1px solid var(--border-default); border-radius: var(--radius-pill); background: var(--field-bg); }
+.settingsSegmented button { min-height: 28px; padding: 0 11px; border: 0; border-radius: var(--radius-pill); color: var(--text-muted); background: transparent; cursor: pointer; font-size: var(--font-sm); line-height: 1; }
+.settingsSegmented button.selected { color: var(--text-primary); background: var(--surface-hover); }
+.settingsError { margin: 0; color: var(--state-danger); font-size: var(--font-sm); }
+.settingsPrimaryButton.compact { flex: 0 0 auto; min-width: max-content; min-height: 36px; padding: 0 16px; border-radius: var(--radius-md); white-space: nowrap; }
+.mcpEmptyCard { padding: 14px 16px; color: var(--text-muted); font-size: var(--font-sm); }
+.mcpDialog .settingsField + .settingsField, .mcpDialog .settingsSegmented + .settingsField, .mcpDialog .settingsField + .settingsSegmented { margin-top: 4px; }
+.mcpDialog .dialogActions { margin-top: 10px; }

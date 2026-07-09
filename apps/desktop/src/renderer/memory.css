@@ -1,0 +1,405 @@
+.memoryPage {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  padding: var(--space-6) var(--space-8);
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 0%, var(--memory-galaxy-accent), transparent 55%),
+    linear-gradient(180deg, var(--app-bg) 0%, color-mix(in srgb, var(--app-bg) 92%, var(--app-bg-radial)) 45%, var(--app-bg) 100%);
+  color: var(--text-primary);
+  overflow: auto;
+}
+
+.memoryPageHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.memoryPageHeader h1 {
+  margin: 0;
+  font-size: var(--font-xl);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-strong);
+}
+
+.memoryPageSubtitle {
+  margin: var(--space-1) 0 0;
+  color: var(--text-muted);
+  font-size: var(--font-sm);
+}
+
+.memoryStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5) var(--space-7);
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+}
+
+.memoryStats strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.memoryFilters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-5) var(--space-6);
+  padding: var(--space-5) var(--space-6);
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--memory-panel-bg);
+  border: 1px solid var(--memory-panel-border);
+}
+
+.memoryFilterField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  min-width: 7rem;
+}
+
+.memoryFilterField input[type="search"],
+.memoryFilterField select {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+  background: var(--field-bg);
+  color: var(--text-primary);
+  font-size: var(--font-sm);
+}
+
+.memoryFilterField input[type="search"]:focus,
+.memoryFilterField select:focus {
+  border-color: var(--focus-border);
+  background: var(--field-bg-focus);
+}
+
+.memoryFilterField input[type="range"] {
+  width: 100%;
+}
+
+.memoryFilterReset {
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: var(--font-xs);
+}
+
+.memoryFilterReset:hover {
+  background: var(--surface-hover-subtle);
+}
+
+.memoryLayout {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 420px;
+  flex: 1;
+}
+
+.memoryLayout.inspectorOpen {
+  grid-template-columns: minmax(0, 1fr) min(340px, 32vw);
+  gap: var(--space-4);
+}
+
+.memoryGalaxyCanvas {
+  position: relative;
+  min-height: 420px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--memory-panel-border);
+  overflow: hidden;
+  background: var(--memory-canvas-bg);
+}
+
+.memoryStarfield {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, var(--memory-star), transparent),
+    radial-gradient(1px 1px at 70% 40%, var(--memory-star), transparent),
+    radial-gradient(1.5px 1.5px at 30% 80%, var(--memory-star), transparent),
+    radial-gradient(1px 1px at 90% 10%, var(--memory-star), transparent);
+  background-size: 100% 100%;
+}
+
+.memoryHoverCard {
+  position: absolute;
+  transform: translateX(-50%);
+  max-width: min(360px, 90%);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-sm);
+  background: var(--surface-popover);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-popover);
+  font-size: var(--font-xs);
+  color: var(--text-primary);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.memoryHoverCard strong {
+  display: block;
+  text-transform: capitalize;
+  color: var(--memory-accent);
+  margin-bottom: var(--space-1);
+}
+
+.memoryInspector {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--memory-panel-bg);
+  border: 1px solid var(--memory-panel-border);
+  overflow: auto;
+  max-height: 70vh;
+  box-shadow: var(--shadow-popover);
+  animation: memoryInspectorIn var(--duration-normal) var(--ease-standard);
+}
+
+.memoryInspectorHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.memoryInspectorPills {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.memoryInspectorClose {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-subtle);
+  background: var(--field-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.memoryInspectorClose:hover {
+  color: var(--text-primary);
+  background: var(--surface-hover-subtle);
+  border-color: var(--border-default);
+}
+
+@keyframes memoryInspectorIn {
+  from {
+    opacity: 0;
+    transform: translateX(var(--space-4));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.memoryTypePill {
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-xs);
+  font-weight: 600;
+  background: color-mix(in srgb, var(--memory-pill-color) 22%, transparent);
+  color: var(--memory-pill-color);
+  border: 1px solid color-mix(in srgb, var(--memory-pill-color) 40%, transparent);
+}
+
+.memoryTypePill.type-fact { --memory-pill-color: var(--memory-type-fact); }
+.memoryTypePill.type-preference { --memory-pill-color: var(--memory-type-preference); }
+.memoryTypePill.type-goal { --memory-pill-color: var(--memory-type-goal); }
+.memoryTypePill.type-episode { --memory-pill-color: var(--memory-type-episode); }
+.memoryTypePill.type-person_context { --memory-pill-color: var(--memory-type-person_context); }
+.memoryTypePill.type-lesson { --memory-pill-color: var(--memory-type-lesson); }
+
+.memoryStatusPill {
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-xs);
+  text-transform: capitalize;
+}
+
+.memoryStatusPill.status-active {
+  background: color-mix(in srgb, var(--state-success) 18%, transparent);
+  color: var(--state-success);
+}
+
+.memoryStatusPill.status-cold {
+  background: color-mix(in srgb, var(--memory-status-cold) 18%, transparent);
+  color: var(--memory-status-cold);
+}
+
+.memoryInspectorContent {
+  margin: 0 0 var(--space-6);
+  line-height: 1.5;
+  font-size: var(--font-md);
+  color: var(--text-primary);
+}
+
+.memoryInspectorMeta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2) var(--space-6);
+  margin: 0 0 var(--space-6);
+  font-size: var(--font-xs);
+}
+
+.memoryInspectorMeta dt {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.memoryInspectorMeta dd {
+  margin: 0;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.memoryInspectorTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.memoryTag {
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-xs);
+  background: var(--memory-tag-bg);
+  color: var(--memory-tag-fg);
+}
+
+.memoryInspectorLinks h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.memoryInspectorMuted {
+  margin: 0;
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+}
+
+.memoryInspectorLinks ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.memoryLinkButton {
+  width: 100%;
+  text-align: left;
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--field-bg);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: var(--font-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.memoryLinkButton:hover {
+  background: var(--surface-hover-subtle);
+  border-color: var(--border-default);
+}
+
+.memoryLinkType {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--memory-accent);
+}
+
+.memoryEmptyState,
+.memoryPageStatus {
+  padding: var(--space-8);
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.memoryPageError {
+  color: var(--state-danger);
+}
+
+.memoryEmptyState h2 {
+  margin: 0 0 var(--space-2);
+  color: var(--text-strong);
+  font-size: var(--font-lg);
+}
+
+@media (max-width: 980px) {
+  .memoryPage {
+    padding-inline: var(--space-4);
+  }
+
+  .memoryLayout.inspectorOpen {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .memoryGalaxyCanvas {
+    min-height: 520px;
+  }
+
+  .memoryInspector {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    bottom: var(--space-3);
+    width: min(360px, calc(100% - var(--space-6)));
+    max-height: none;
+    z-index: 3;
+    backdrop-filter: blur(18px);
+  }
+}
+
+@media (max-width: 640px) {
+  .memoryGalaxyCanvas {
+    min-height: 60vh;
+  }
+
+  .memoryInspector {
+    inset: auto var(--space-2) var(--space-2) var(--space-2);
+    width: auto;
+    max-height: min(70vh, 520px);
+    animation-name: memoryInspectorUp;
+  }
+
+  @keyframes memoryInspectorUp {
+    from {
+      opacity: 0;
+      transform: translateY(var(--space-4));
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

@@ -1,0 +1,149 @@
+/* Media attachments */
+.pendingAttachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 10px 0;
+}
+
+.pendingImageAttachment {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  background: var(--surface-popover);
+}
+
+.pendingImageAttachment img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pendingImageAttachment button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 999px;
+  color: #202020;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .22);
+  cursor: pointer;
+}
+
+.pendingImageAttachment button:hover {
+  background: #fff;
+}
+
+.pendingAttachment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 260px;
+  padding: 6px 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--surface-hover-subtle);
+  color: var(--text-primary);
+  font-size: 12px;
+}
+
+.pendingAttachment span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pendingAttachment small {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.pendingAttachment button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.pendingAttachment button:hover {
+  color: var(--text-primary);
+  background: var(--surface-hover);
+}
+
+.messageAttachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0;
+}
+
+.message.user .messageAttachments {
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.messageImageAttachment,
+.messageFileAttachment {
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-hover-subtle);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.messageImageAttachment {
+  display: block;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  padding: 0;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.messageImageAttachment img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--surface-popover);
+}
+
+.messageImageAttachment span {
+  display: none;
+}
+
+.messageFileAttachment {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 320px;
+  padding: 9px 11px;
+  border-radius: 14px;
+}
+
+.messageFileAttachment span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.messageFileAttachment small {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
