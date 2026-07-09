@@ -36,6 +36,5 @@ linux:
   target:
     - AppImage
   category: Utility
-  desktopName: geistr-core
 
 publish: null
