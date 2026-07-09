@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest an improvement to Geistr Core
+title: "Feature: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to build or improve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What should Geistr Core add or change?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional context

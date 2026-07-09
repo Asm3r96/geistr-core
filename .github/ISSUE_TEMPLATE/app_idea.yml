@@ -1,0 +1,20 @@
+name: App idea / showcase
+description: Share an app idea or something built on Geistr Core
+title: "App idea: "
+labels: [showcase]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What are you building?
+    validations:
+      required: true
+  - type: textarea
+    id: core
+    attributes:
+      label: How would Geistr Core help?
+      description: Memory, skills, MCP, loops, providers, tools, UI, etc.
+  - type: textarea
+    id: links
+    attributes:
+      label: Links, screenshots, or demos
