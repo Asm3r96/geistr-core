@@ -14,9 +14,9 @@ That is why I created Geistr Core for my own use: a base app I can reuse wheneve
 
 Use this to save time, start closer to your real idea, and focus on the specific experience you want to create.
 
-[![Watch Geistr Core chat demo](docs/assets/chat-with-agent-preview.png)](docs/assets/chat-with-agent.mp4)
+![Geistr Core chat demo](docs/assets/chat-with-agent.gif)
 
-[Watch the chat demo video](docs/assets/chat-with-agent.mp4)
+[Watch/download the MP4](docs/assets/chat-with-agent.mp4)
 
 ## What you get out of the box
 
@@ -90,9 +90,9 @@ Geistr includes a local memory system for indexing useful session content, retri
 
 It also includes a read-only **Memory Galaxy** UI for exploring memories as a graph.
 
-[![Watch Memory Galaxy demo](docs/assets/memory-galaxy-preview.png)](docs/assets/memory-galaxy.mp4)
+![Memory Galaxy demo](docs/assets/memory-galaxy.gif)
 
-[Watch the Memory Galaxy demo video](docs/assets/memory-galaxy.mp4)
+[Watch/download the MP4](docs/assets/memory-galaxy.mp4)
 
 Docs:
 
