@@ -17,6 +17,8 @@ export interface DesktopChatMessage {
   error?: NormalizedProviderError;
   /** Attached media files (images, documents, etc.) */
   attachments?: MessageAttachment[];
+  /** True while a steering message is queued in Pi and has not yet been delivered to the agent. */
+  isPendingSteering?: boolean;
 }
 
 export interface DesktopRuntimeStatus {

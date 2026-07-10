@@ -217,6 +217,23 @@ export class DesktopRuntimeBridge {
     if (!trimmed && (!attachments || attachments.length === 0)) return this.getState();
     if (!this.activeSessionId) await this.initialize();
     const sessionKey = this.activeSessionId!;
+    if (this.activeForegroundRun) {
+      if (!trimmed || (attachments && attachments.length > 0)) return this.getState();
+      const modelState = await this.activeForegroundRun.runtime.getModelSelectionState();
+      const selectedModel = modelState.selected;
+      const userMessage = this.sessionStore.appendMessage({
+        sessionKey,
+        role: "user",
+        content: trimmed,
+        providerId: selectedModel?.provider ?? null,
+        modelId: selectedModel?.modelId ?? null,
+        metadata: { source: "renderer", userTurn: true, hiddenFromChat: false, steering: true },
+      });
+      this.messages = [...this.messages, { ...userMessage, isPendingSteering: true }];
+      this.emit();
+      await this.activeForegroundRun.runtime.steer(trimmed);
+      return this.getState();
+    }
     if (trimmed === "/compact" || trimmed === "/compact!") {
       return this.runManualCompaction(sessionKey, trimmed === "/compact!");
     }
@@ -609,6 +626,16 @@ export class DesktopRuntimeBridge {
       eventFailure = new Error("The provider request failed, but the error event could not be inspected safely.");
     }
     if (eventFailure) this.pendingRuntimeFailure = eventFailure;
+    if (type === "queue_update") {
+      const steering = Array.isArray(record.steering) ? record.steering.filter((item): item is string => typeof item === "string") : [];
+      const pending = new Set(steering);
+      this.messages = this.messages.map((message) => (
+        message.role === "user" && (message.isPendingSteering || pending.has(message.content))
+          ? { ...message, isPendingSteering: pending.has(message.content) }
+          : message
+      ));
+      return;
+    }
     if (type === "auto_retry_start") {
       const attempt = typeof payload.attempt === "number" ? payload.attempt : undefined;
       const maxAttempts = typeof payload.maxAttempts === "number" ? payload.maxAttempts : undefined;

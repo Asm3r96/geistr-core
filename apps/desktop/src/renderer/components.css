@@ -16,6 +16,24 @@ optgroup {
 .message { position: relative; margin: 0 0 14px; line-height: 1.42; min-width: 0; }
 .message.user { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 80%; width: fit-content; margin-left: auto; }
 .message.user .messageContent { padding: 10px 14px; border: 1px solid var(--border-subtle); border-radius: 18px; background: var(--surface-message-user); }
+.message.user.pendingSteering .messageContent {
+  position: relative;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--border-subtle) 70%, transparent);
+  opacity: .62;
+}
+.message.user.pendingSteering .messageContent::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--queued-border-angle), transparent 0deg 315deg, color-mix(in srgb, var(--focus-border) 62%, transparent) 318deg 342deg, transparent 345deg 360deg);
+  pointer-events: none;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: queuedBorderOrbit 3.8s linear infinite;
+}
 .message.assistant { max-width: 100%; padding: 4px 0; border: none; background: transparent; }
 .message.streaming { min-height: 34px; }
 .runTranscriptBlock { display: grid; gap: 12px; }
@@ -109,6 +127,14 @@ optgroup {
 @keyframes activityPulse {
   0%, 100% { opacity: .35; transform: scale(.9); }
   50% { opacity: .9; transform: scale(1.1); }
+}
+@property --queued-border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes queuedBorderOrbit {
+  to { --queued-border-angle: 360deg; }
 }
 .errorCard { display: grid; gap: 12px; width: min(680px, 100%); padding: 14px; border: 1px solid var(--border-default); border-radius: var(--radius-xl); background: var(--surface-hover-subtle); color: var(--text-secondary); }
 .errorCardHeader { display: grid; gap: 4px; }

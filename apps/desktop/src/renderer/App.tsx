@@ -167,8 +167,12 @@ export function App() {
     }
   }, [config?.appearance.themeMode]);
 
-  const runInProgress = state.status.isStreaming || isSending;
-  const canSend = useMemo(() => Boolean(api && (draft.trim() || pendingAttachments.length > 0) && !runInProgress), [api, draft, runInProgress, pendingAttachments]);
+  const runInProgress = state.status.isStreaming;
+  const canSteer = Boolean(api && runInProgress && draft.trim() && pendingAttachments.length === 0 && !isSending);
+  const canSend = useMemo(
+    () => Boolean(api && !runInProgress && !isSending && (draft.trim() || pendingAttachments.length > 0)),
+    [api, draft, runInProgress, isSending, pendingAttachments],
+  );
 
   async function handleUpload() {
     if (!api?.pickAndUploadMedia || !state.activeSessionId) return;
@@ -204,10 +208,11 @@ export function App() {
 
   async function sendMessage() {
     if (!api) return;
+    if (runInProgress && (!draft.trim() || pendingAttachments.length > 0)) return;
     const text = draft;
     const attachments = pendingAttachments.length > 0 ? pendingAttachments : undefined;
     setDraft("");
-    setPendingAttachments([]);
+    if (!runInProgress) setPendingAttachments([]);
     setIsSending(true);
     try {
       setState(await (attachments ? api.sendMessage(text, attachments) : api.sendMessage(text)));
@@ -512,7 +517,7 @@ export function App() {
             </div>
           ) : (
             visibleMessagesForRun(state.messages, state.runUi).map((message) => (
-              <article className={`message ${message.role}${message.isStreaming ? " streaming" : ""}`} key={message.id}>
+              <article className={`message ${message.role}${message.isStreaming ? " streaming" : ""}${message.isPendingSteering ? " pendingSteering" : ""}`} key={message.id}>
                 {message.isStreaming ? (
                   <div className="messageActivityCard" aria-label="Assistant activity">
                     <div className="messageActivityHeader">
@@ -611,11 +616,11 @@ export function App() {
             <button
               className="sendButton"
               type={runInProgress ? "button" : "submit"}
-              disabled={runInProgress ? !api : !canSend}
-              aria-label={runInProgress ? "Stop run" : "Send message"}
-              onClick={runInProgress ? () => void stopRun() : undefined}
+              disabled={runInProgress ? !(canSteer || api) : !canSend}
+              aria-label={runInProgress && !canSteer ? "Stop run" : "Send message"}
+              onClick={runInProgress ? () => (canSteer ? void sendMessage() : void stopRun()) : undefined}
             >
-              {runInProgress ? <Square size={14} fill="currentColor" /> : <ArrowUp size={22} />}
+              {runInProgress && !canSteer ? <Square size={14} fill="currentColor" /> : <ArrowUp size={22} />}
             </button>
           </div>
         </form>

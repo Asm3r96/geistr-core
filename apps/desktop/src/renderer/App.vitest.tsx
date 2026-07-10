@@ -130,6 +130,48 @@ describe("App", () => {
     expect(stopRun).toHaveBeenCalledTimes(1);
   });
 
+  it("lets the user submit a steering message while a run is active", async () => {
+    const user = userEvent.setup();
+    const sendMessage = vi.fn(async (text: string) => ({
+      ...readyState,
+      status: { label: "Geistr is thinking…", isStreaming: true },
+      messages: [{ id: "steer-1", role: "user" as const, content: text.trim(), isPendingSteering: true }],
+    }));
+    window.geistr = fakeApi({
+      sendMessage,
+      getInitialState: vi.fn(async () => ({
+        ...readyState,
+        status: { label: "Geistr is thinking…", isStreaming: true },
+      })),
+    });
+
+    render(<App />);
+
+    await user.type(await screen.findByLabelText("Message Geistr"), "change direction");
+    await user.click(screen.getByRole("button", { name: "Send message" }));
+
+    expect(sendMessage).toHaveBeenCalledWith("change direction");
+    const steeringMessage = await screen.findByText("change direction");
+    expect(steeringMessage).toBeInTheDocument();
+    expect(steeringMessage.closest("article")).toHaveClass("pendingSteering");
+  });
+
+  it("removes the steering queue indicator once the agent has consumed the message", async () => {
+    window.geistr = fakeApi({
+      getInitialState: vi.fn(async () => ({
+        ...readyState,
+        status: { label: "Geistr is thinking…", isStreaming: true },
+        messages: [{ id: "steer-1", role: "user" as const, content: "change direction", isPendingSteering: false }],
+      })),
+    });
+
+    render(<App />);
+
+    const steeringMessage = await screen.findByText("change direction");
+    expect(steeringMessage).toBeInTheDocument();
+    expect(steeringMessage.closest("article")).not.toHaveClass("pendingSteering");
+  });
+
   it("streams the final answer inside the stable run transcript while the assistant is running", async () => {
     window.geistr = fakeApi({
       getInitialState: vi.fn(async () => ({
