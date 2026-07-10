@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { DesktopApi, DesktopChatState, DesktopProviderSettingsState } from "../../shared/desktop-api";
 
@@ -13,6 +13,25 @@ export function ProvidersSettings({ state, api, onStateChange }: ProvidersSettin
   const [connectingProvider, setConnectingProvider] = useState<string | null>(null);
   const [providerSearch, setProviderSearch] = useState("");
   const [editingApiKeyProvider, setEditingApiKeyProvider] = useState<string | null>(null);
+
+  // Google OAuth client config
+  const [googleClientId, setGoogleClientId] = useState("");
+  const [googleClientSecret, setGoogleClientSecret] = useState("");
+  const [googleConfigSaved, setGoogleConfigSaved] = useState(false);
+  const [showGoogleConfig, setShowGoogleConfig] = useState(false);
+
+  // Load saved Google OAuth config on mount
+  useEffect(() => {
+    if (!api) return;
+    void api.getGoogleOAuthConfig().then((config) => {
+      if (config.clientId || config.clientSecret) {
+        setGoogleClientId(config.clientId);
+        setGoogleClientSecret(config.clientSecret);
+        setGoogleConfigSaved(true);
+      }
+      setShowGoogleConfig(false);
+    });
+  }, [api]);
 
   const providerQuery = providerSearch.trim().toLowerCase();
   const visibleLoginProviders = state.settings.providers.loginProviders
@@ -33,6 +52,13 @@ export function ProvidersSettings({ state, api, onStateChange }: ProvidersSettin
     onStateChange(await api.saveProviderApiKey(provider, apiKeyDrafts[provider] ?? ""));
     setApiKeyDrafts((drafts) => ({ ...drafts, [provider]: "" }));
     setEditingApiKeyProvider(null);
+  }
+
+  async function saveGoogleConfig() {
+    if (!api) return;
+    await api.saveGoogleOAuthConfig({ clientId: googleClientId.trim(), clientSecret: googleClientSecret.trim() });
+    setGoogleConfigSaved(true);
+    setShowGoogleConfig(false);
   }
 
   async function connectLoginProvider(provider: string) {
@@ -65,7 +91,9 @@ export function ProvidersSettings({ state, api, onStateChange }: ProvidersSettin
       <div className="settingsCard">
         <h3>Subscription / login providers</h3>
         {visibleLoginProviders.length === 0 ? <div className="settingsEmpty">No matching login providers</div> : null}
-        {visibleLoginProviders.map((provider) => (
+        {visibleLoginProviders.map((provider) => {
+          const shouldShowGoogleConfig = provider.id === "google-oauth" && (showGoogleConfig || (!googleConfigSaved && !provider.configured));
+          return (
           <div className={provider.configured ? "providerRow connected" : "providerRow"} key={provider.id}>
             <div>
               <strong>{provider.name}</strong>
@@ -73,6 +101,9 @@ export function ProvidersSettings({ state, api, onStateChange }: ProvidersSettin
             </div>
             {provider.configured ? <span className="connectedBadge">Connected</span> : null}
             <div className="providerActions">
+              {provider.id === "google-oauth" && !shouldShowGoogleConfig ? (
+                <button className="secondaryButton" type="button" onClick={() => setShowGoogleConfig(true)}>Update config</button>
+              ) : null}
               <button type="button" disabled={Boolean(connectingProvider)} onClick={() => void connectLoginProvider(provider.id)}>
                 {connectingProvider === provider.id ? "Connecting…" : provider.configured ? "Reconnect" : "Connect"}
               </button>
@@ -82,8 +113,33 @@ export function ProvidersSettings({ state, api, onStateChange }: ProvidersSettin
                 </button>
               ) : null}
             </div>
+            {shouldShowGoogleConfig ? (
+              <div className="googleOAuthConfig">
+                <input
+                  aria-label="Google OAuth Client ID"
+                  type="text"
+                  placeholder="Client ID (e.g. ...apps.googleusercontent.com)"
+                  value={googleClientId}
+                  onChange={(event) => { setGoogleClientId(event.target.value); setGoogleConfigSaved(false); }}
+                />
+                <input
+                  aria-label="Google OAuth Client Secret"
+                  type="password"
+                  placeholder="Client Secret (e.g. GOCSPX-...)"
+                  value={googleClientSecret}
+                  onChange={(event) => { setGoogleClientSecret(event.target.value); setGoogleConfigSaved(false); }}
+                />
+                <div className="providerActions">
+                  <button type="button" onClick={() => void saveGoogleConfig()}>Save config</button>
+                  {googleConfigSaved ? (
+                    <button className="secondaryButton" type="button" onClick={() => setShowGoogleConfig(false)}>Cancel</button>
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
           </div>
-        ))}
+          );
+        })}
       </div>
       <div className="settingsCard">
         <h3>API key providers</h3>

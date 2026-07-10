@@ -97,7 +97,7 @@ export type {
   CoreProviderAuthStatus,
   CoreProviderLoginCallbacks,
 } from "./provider-auth";
-export { createCoreProviderAuthLayer, refreshGoogleProviderAuth, refreshXaiProviderAuth } from "./provider-auth";
+export { createCoreProviderAuthLayer, refreshGoogleProviderAuth, refreshXaiProviderAuth, saveGoogleOAuthClientConfig, getGoogleOAuthClientConfigValues, loadAndApplyGoogleOAuthConfig } from "./provider-auth";
 export type { AssembleSystemPromptInput, SystemPromptSection } from "./system-prompt";
 export { assembleSystemPrompt } from "./system-prompt";
 export type {

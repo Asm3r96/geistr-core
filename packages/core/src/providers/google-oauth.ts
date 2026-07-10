@@ -19,14 +19,17 @@ import { registerOAuthProvider, type OAuthLoginCallbacks, type OAuthProviderInte
 const GOOGLE_OAUTH_CLIENT_ID_ENV = "GEISTR_GOOGLE_OAUTH_CLIENT_ID";
 const GOOGLE_OAUTH_CLIENT_SECRET_ENV = "GEISTR_GOOGLE_OAUTH_CLIENT_SECRET";
 
-function getGoogleOAuthClientConfig(): { clientId: string; clientSecret: string } {
-  const clientId = process.env[GOOGLE_OAUTH_CLIENT_ID_ENV]?.trim();
-  const clientSecret = process.env[GOOGLE_OAUTH_CLIENT_SECRET_ENV]?.trim();
-  if (!clientId || !clientSecret) {
-    throw new Error(
-      `Google OAuth requires ${GOOGLE_OAUTH_CLIENT_ID_ENV} and ${GOOGLE_OAUTH_CLIENT_SECRET_ENV} environment variables.`,
-    );
-  }
+let googleOAuthOverride: { clientId: string; clientSecret: string } | null = null;
+
+/** Set Google OAuth client config at runtime (from user-provided values in Settings). */
+export function setGoogleOAuthClientConfig(config: { clientId: string; clientSecret: string }): void {
+  googleOAuthOverride = { clientId: config.clientId.trim(), clientSecret: config.clientSecret.trim() };
+}
+
+/** Get Google OAuth client config: env vars first, then runtime override, then empty. */
+export function getGoogleOAuthClientConfig(): { clientId: string; clientSecret: string } {
+  const clientId = process.env[GOOGLE_OAUTH_CLIENT_ID_ENV]?.trim() || googleOAuthOverride?.clientId || "";
+  const clientSecret = process.env[GOOGLE_OAUTH_CLIENT_SECRET_ENV]?.trim() || googleOAuthOverride?.clientSecret || "";
   return { clientId, clientSecret };
 }
 

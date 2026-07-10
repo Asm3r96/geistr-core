@@ -94,3 +94,5 @@ Geistr-specific persistence for a default model should be added only after the a
 Geistr's first provider authentication seam is `createCoreProviderAuthLayer()` in `@geistr/core`. It wraps Pi `AuthStorage` for API key credentials and Pi OAuth login providers. UI surfaces must call this through app/runtime bridges; they must not create their own secret storage or provider catalog.
 
 The desktop Providers settings page currently derives API key provider rows from Pi model registry providers and derives login provider rows from Pi OAuth providers. This is enough for the first setup surface while keeping provider/auth ownership in Pi-backed core code.
+
+Google OAuth/Antigravity login does not bundle OAuth client metadata in source. Desktop users can enter client ID/secret in Providers settings; Geistr persists that separate login configuration locally and reuses it across reconnects. `GEISTR_GOOGLE_OAUTH_CLIENT_ID` and `GEISTR_GOOGLE_OAUTH_CLIENT_SECRET` remain supported as development overrides.

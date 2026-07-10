@@ -52,6 +52,11 @@
 .apiKeyRow input:focus { border-color: var(--focus-border); }
 .authNotice { max-width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--border-default); border-radius: 12px; color: var(--text-secondary); background: var(--surface-hover-subtle); overflow-wrap: anywhere; }
 
+/* ── Google OAuth config inputs ──────────────────────── */
+.googleOAuthConfig { display: grid; gap: 8px; grid-column: 1 / -1; padding-top: 8px; border-top: 1px solid var(--border-subtle); }
+.googleOAuthConfig input { width: 100%; min-height: 34px; padding: 0 10px; border: 1px solid var(--border-default); border-radius: 10px; color: var(--text-secondary); background: var(--field-bg); outline: 0; font-size: 13px; }
+.googleOAuthConfig input:focus { border-color: var(--focus-border); }
+
 /* ── Theme settings ──────────────────────────────────── */
 .themeSettings p { margin: 0; }
 .themeSettings p:first-of-type { margin-bottom: 8px; }

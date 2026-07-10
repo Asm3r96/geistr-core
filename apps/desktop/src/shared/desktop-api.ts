@@ -170,6 +170,8 @@ export interface DesktopApi {
   saveProviderApiKey(provider: string, apiKey: string): Promise<DesktopChatState>;
   removeProviderAuth(provider: string): Promise<DesktopChatState>;
   connectLoginProvider(provider: string): Promise<DesktopChatState>;
+  saveGoogleOAuthConfig(config: { clientId: string; clientSecret: string }): Promise<{ ok: boolean }>;
+  getGoogleOAuthConfig(): Promise<{ clientId: string; clientSecret: string }>;
   getAppConfig(): Promise<AppConfig>;
   updateAppConfig(partial: DeepPartial<AppConfig>): Promise<AppConfig>;
   getMemoryGraph(options?: GetMemoryGraphOptions): Promise<MemoryGraph>;

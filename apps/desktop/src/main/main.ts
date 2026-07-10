@@ -3,7 +3,7 @@ import { existsSync, mkdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
-import { ProfileStore, SessionPersistenceStore, mergeAppConfig, sanitizeAppConfig, registerGoogleOAuthProvider } from "@geistr/core";
+import { ProfileStore, SessionPersistenceStore, mergeAppConfig, sanitizeAppConfig, registerGoogleOAuthProvider, saveGoogleOAuthClientConfig, getGoogleOAuthClientConfigValues, loadAndApplyGoogleOAuthConfig } from "@geistr/core";
 import type { AppConfig, AppConfigUpdate, MessageAttachment } from "@geistr/core";
 
 import { readAppConfig, writeAppConfig } from "./app-config-storage.js";
@@ -31,6 +31,7 @@ function getMediaManager(): MediaManager {
 }
 
 registerGoogleOAuthProvider();
+loadAndApplyGoogleOAuthConfig();
 
 function getBridge(): DesktopRuntimeBridge {
   if (!bridge) {
@@ -272,6 +273,11 @@ app.whenReady().then(async () => {
   ipcMain.handle("geistr:save-provider-api-key", (_event, provider: string, apiKey: string) => runtimeBridge.saveProviderApiKey(provider, apiKey));
   ipcMain.handle("geistr:remove-provider-auth", (_event, provider: string) => runtimeBridge.removeProviderAuth(provider));
   ipcMain.handle("geistr:connect-login-provider", (_event, provider: string) => runtimeBridge.connectLoginProvider(provider));
+  ipcMain.handle("geistr:save-google-oauth-config", (_event, config: { clientId: string; clientSecret: string }) => {
+    saveGoogleOAuthClientConfig(config);
+    return { ok: true };
+  });
+  ipcMain.handle("geistr:get-google-oauth-config", () => getGoogleOAuthClientConfigValues());
 
   // ── Media (file upload / paste) IPC handlers ──
   ipcMain.handle("geistr:pick-upload-media", async (_event, sessionKey: string) => {

@@ -1,3 +1,5 @@
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { join } from "node:path";
 import { AuthStorage, getAgentDir } from "@earendil-works/pi-coding-agent";
 import type {
   OAuthAuthInfo,
@@ -7,7 +9,7 @@ import type {
   OAuthSelectPrompt,
 } from "@earendil-works/pi-ai/compat";
 
-import { loginGoogle, refreshGoogleToken } from "./providers/google-oauth";
+import { loginGoogle, refreshGoogleToken, setGoogleOAuthClientConfig, getGoogleOAuthClientConfig } from "./providers/google-oauth";
 import { loginXaiOAuthDeviceCode, refreshXaiOAuthToken } from "./providers/xai-oauth";
 import { PROVIDER_DISPLAY_NAME_OVERRIDES } from "./provider-selection";
 
@@ -221,6 +223,53 @@ function toOAuthCallbacks(callbacks: CoreProviderLoginCallbacks): OAuthLoginCall
   if (callbacks.onManualCodeInput) oauthCallbacks.onManualCodeInput = callbacks.onManualCodeInput;
   if (callbacks.signal) oauthCallbacks.signal = callbacks.signal;
   return oauthCallbacks;
+}
+
+const GOOGLE_OAUTH_CONFIG_FILENAME = "google-oauth-config.json";
+
+function getGoogleOAuthConfigPath(): string {
+  return join(getAgentDir(), GOOGLE_OAUTH_CONFIG_FILENAME);
+}
+
+function readGoogleOAuthConfigFile(): { clientId: string; clientSecret: string } {
+  const configPath = getGoogleOAuthConfigPath();
+  if (!existsSync(configPath)) return { clientId: "", clientSecret: "" };
+  try {
+    const raw = readFileSync(configPath, "utf-8");
+    const parsed = JSON.parse(raw) as { clientId?: string; clientSecret?: string };
+    return {
+      clientId: typeof parsed.clientId === "string" ? parsed.clientId : "",
+      clientSecret: typeof parsed.clientSecret === "string" ? parsed.clientSecret : "",
+    };
+  } catch {
+    return { clientId: "", clientSecret: "" };
+  }
+}
+
+function writeGoogleOAuthConfigFile(config: { clientId: string; clientSecret: string }): void {
+  const configPath = getGoogleOAuthConfigPath();
+  const agentDir = getAgentDir();
+  if (!existsSync(agentDir)) mkdirSync(agentDir, { recursive: true });
+  writeFileSync(configPath, JSON.stringify(config, null, 2), "utf-8");
+}
+
+/** Load saved Google OAuth client config from disk and set it as the runtime override. */
+export function loadAndApplyGoogleOAuthConfig(): void {
+  const config = readGoogleOAuthConfigFile();
+  if (config.clientId || config.clientSecret) {
+    setGoogleOAuthClientConfig(config);
+  }
+}
+
+/** Save Google OAuth client config to disk and set it as the runtime override. */
+export function saveGoogleOAuthClientConfig(config: { clientId: string; clientSecret: string }): void {
+  writeGoogleOAuthConfigFile(config);
+  setGoogleOAuthClientConfig(config);
+}
+
+/** Get current Google OAuth client config (from env vars or runtime override). */
+export function getGoogleOAuthClientConfigValues(): { clientId: string; clientSecret: string } {
+  return getGoogleOAuthClientConfig();
 }
 
 /** Invalidate/refresh an OAuth credential stored in AuthStorage. */

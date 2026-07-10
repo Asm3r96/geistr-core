@@ -38,8 +38,9 @@ export function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [activeScreen, setActiveScreen] = useState<"app" | "settings">("app");
   const [activeAppPage, setActiveAppPage] = useState<"chat" | "scheduled" | "memory">("chat");
-  const [activeSettingsPage, setActiveSettingsPage] = useState<SettingsPage>("providers");
+  const [activeSettingsPage, setActiveSettingsPage] = useState<SettingsPage>("general");
   const [config, setConfig] = useState<AppConfig | null>(null);
+  const settingsPageRef = useRef<HTMLDivElement>(null);
   const [userDisplayName, setUserDisplayName] = useState<string>("");
   const [sidebarWidth, setSidebarWidth] = useState<number | null>(null);
   const [openChatMenuFor, setOpenChatMenuFor] = useState<string | null>(null);
@@ -124,6 +125,13 @@ export function App() {
   const messageListRef = useRef<HTMLElement>(null);
   const previousUserMessageCountRef = useRef(0);
   const isMac = typeof navigator !== "undefined" && /Mac/i.test(navigator.platform);
+
+  // Scroll settings page to top when switching pages or opening settings
+  useEffect(() => {
+    if (activeScreen === "settings" && settingsPageRef.current) {
+      settingsPageRef.current.scrollTop = 0;
+    }
+  }, [activeScreen, activeSettingsPage]);
 
   useEffect(() => {
     if (!openChatMenuFor) return;
@@ -477,7 +485,7 @@ export function App() {
               <button className={activeSettingsPage === "mcp" ? "settingsNavItem selected" : "settingsNavItem"} type="button" onClick={() => navigateTo({ screen: "settings", page: "mcp" })}><McpIcon className="settingsNavIconImage" /> MCP Servers</button>
             </div>
           </aside>
-          <section className="settingsPage">
+          <section className="settingsPage" ref={settingsPageRef}>
             {activeSettingsPage === "theme" && config && api ? (
               <ThemeSettings config={config} api={api} onConfigChange={setConfig} />
             ) : null}
