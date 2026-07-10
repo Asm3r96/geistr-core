@@ -105,6 +105,39 @@ function registerWindowReloadShortcuts(window: BrowserWindow): void {
   });
 }
 
+function isDevServerUrl(url: string): boolean {
+  if (!isDev) return false;
+  try {
+    return new URL(url).origin === new URL(process.env.VITE_DEV_SERVER_URL!).origin;
+  } catch {
+    return false;
+  }
+}
+
+function openExternalHttpUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return false;
+    if (isDevServerUrl(parsed.toString())) return false;
+    void shell.openExternal(parsed.toString());
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function registerExternalLinkHandling(window: BrowserWindow): void {
+  window.webContents.setWindowOpenHandler(({ url }) => {
+    if (openExternalHttpUrl(url)) return { action: "deny" };
+    return { action: "deny" };
+  });
+
+  window.webContents.on("will-navigate", (event, url) => {
+    if (!openExternalHttpUrl(url)) return;
+    event.preventDefault();
+  });
+}
+
 function createWindow(): void {
   const theme = resolveWindowTheme();
   const window = new BrowserWindow({
@@ -134,6 +167,7 @@ function createWindow(): void {
   window.setMenu(null);
   window.setMenuBarVisibility(false);
   registerWindowReloadShortcuts(window);
+  registerExternalLinkHandling(window);
 
   if (isDev) {
     void window.loadURL(process.env.VITE_DEV_SERVER_URL!);
