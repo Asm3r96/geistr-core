@@ -166,6 +166,17 @@ Docs:
 - [`docs/loops/artifact-store.md`](docs/loops/artifact-store.md)
 - [`docs/loops/session-compaction-loop.md`](docs/loops/session-compaction-loop.md)
 
+## Roadmap
+
+High-level core improvements planned next:
+
+- [ ] Add token usage statistics by model and day, split by input and output tokens
+- [ ] Add a user profile screen
+- [ ] Add automatic update notifications with a download prompt when a new version is released
+- [ ] Improve memory injection into the runtime
+- [ ] Improve session management
+- [ ] Add optional downloadable voice input using a small open-source model
+
 ## Download and install
 
 For normal use, download the latest installer from [GitHub Releases](https://github.com/Asm3r96/geistr-core/releases/latest):
