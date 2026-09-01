@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@geistr/core": "workspace:*",
-    "lucide-react": "^0.468.0",
+    "lucide-react": "^1.37.0",
     "marked": "^18.0.5",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
@@ -28,16 +28,16 @@
   "author": "Geistr",
   "license": "MIT",
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.185.1",
     "@vitejs/plugin-react": "^6.0.3",
-    "electron": "^43.0.0",
+    "electron": "^44.0.0",
     "electron-builder": "^26.0.12",
-    "jsdom": "^29.1.1",
+    "jsdom": "^30.0.1",
     "vite": "^8.1.3"
   }
 }
